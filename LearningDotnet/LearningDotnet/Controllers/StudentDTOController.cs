@@ -2,6 +2,8 @@
 using LearningDotnet.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.JsonPatch.Converters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LearningDotnet.Controllers
@@ -132,15 +134,56 @@ namespace LearningDotnet.Controllers
            // // return Ok(student);
         }
 
-        //[AcceptVerbs("GET","POST")]
-        //public bool verifyEmail(string Email)
-        //{
-        // var student=  CollegeRepository.Students.Where(x => x.Email == Email).FirstOrDefault();
-        //    if (student != null)
-        //        return true;
+        [HttpPut]
+        public ActionResult UpdateStudent([FromBody] StudentDTO studentDTO)
+        {
+            if(studentDTO == null && studentDTO.Id <= 0)
+            {
+                return BadRequest();
+            }
+            var student = CollegeRepository.Students.Where(x => x.Id == studentDTO.Id).FirstOrDefault();
+            if (student == null)
+                return NotFound();
 
-        //    return false;
+            student.Email = studentDTO.Email;
+            student.Address = studentDTO.Address;
+            student.StudentName = studentDTO.StudentName;
 
-        //}
+            return NoContent();
+        }
+
+        [HttpPatch]
+        [Route("{id:int}/UpdatePartial")]
+        //for patch need to libary
+        //jsonpatch , newtonsoftjson
+        public ActionResult UpdatePartial(int id,[FromBody] JsonPatchDocument<StudentDTO> studentDTO)
+        {
+            if (studentDTO == null && id <= 0)
+            {
+                return BadRequest();
+            }
+            var student = CollegeRepository.Students.Where(x => x.Id ==id).FirstOrDefault();
+            if (student == null)
+                return NotFound();
+
+            var std = new StudentDTO()
+            {
+                Id=id,
+                Email= student.Email,
+                Address= student.Address,
+                StudentName= student.StudentName
+
+            };
+            studentDTO.ApplyTo(std,ModelState);
+
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            student.Email = std.Email;
+            student.Address = std.Address;
+            student.StudentName = std.StudentName;
+
+            return NoContent();
+        }
     }
 }
