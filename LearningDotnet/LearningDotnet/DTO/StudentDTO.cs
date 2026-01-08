@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using LearningDotnet.Validator;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 
@@ -24,5 +25,7 @@ namespace LearningDotnet.DTO
         public int Password { get; set; }
         [Compare(nameof(Password))]
         public int ConfirmPassWord { get; set; }
+        [DateCheckValidater]
+        public DateTime createon { get; set; }
     }
 }

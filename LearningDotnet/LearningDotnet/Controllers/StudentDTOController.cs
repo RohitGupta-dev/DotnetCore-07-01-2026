@@ -106,6 +106,15 @@ namespace LearningDotnet.Controllers
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            //Custom Error Attribute
+            //1.Direct Adding
+            //2.Custom Attribute
+            if (studentDTO.age > 100)
+            {
+                ModelState.AddModelError("Age error","Age Must Less Then 1000");
+                return BadRequest();
+            }
+
             var studentId = CollegeRepository.Students.LastOrDefault().Id + 1;
             Student student = new Student()
             {
