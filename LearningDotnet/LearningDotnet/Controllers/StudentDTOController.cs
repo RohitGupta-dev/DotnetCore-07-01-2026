@@ -101,6 +101,7 @@ namespace LearningDotnet.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public ActionResult<StudentDTO> PostStudent([FromBody]StudentDTO studentDTO) { 
             if(studentDTO == null)
                 return BadRequest();
@@ -115,7 +116,11 @@ namespace LearningDotnet.Controllers
 
             };
             CollegeRepository.Students.Add(student);
-            return Ok(student);
+            // in create we have to return new Route 
+           return CreatedAtRoute("GetStudentByIdStudentDTO", new {Id= student.Id }, studentDTO);
+
+            //ok is for genral sucess 
+           // // return Ok(student);
         }
     }
 }
