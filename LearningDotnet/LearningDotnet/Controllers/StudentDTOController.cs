@@ -103,8 +103,8 @@ namespace LearningDotnet.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public ActionResult<StudentDTO> PostStudent([FromBody]StudentDTO studentDTO) { 
-            if(studentDTO == null)
-                return BadRequest();
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
 
             var studentId = CollegeRepository.Students.LastOrDefault().Id + 1;
             Student student = new Student()
@@ -122,5 +122,16 @@ namespace LearningDotnet.Controllers
             //ok is for genral sucess 
            // // return Ok(student);
         }
+
+        //[AcceptVerbs("GET","POST")]
+        //public bool verifyEmail(string Email)
+        //{
+        // var student=  CollegeRepository.Students.Where(x => x.Email == Email).FirstOrDefault();
+        //    if (student != null)
+        //        return true;
+
+        //    return false;
+
+        //}
     }
 }
