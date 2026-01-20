@@ -1,0 +1,7 @@
+2026-01-20 08:56:42.747 +05:30 [INF] Request starting HTTP/2 GET https://localhost:7085/api/StudentDTO/All - null null
+2026-01-20 08:56:42.757 +05:30 [INF] Executing endpoint 'LearningDotnet.Controllers.StudentDTOController.GetStudents (LearningDotnet)'
+2026-01-20 08:56:42.757 +05:30 [INF] Route matched with {action = "GetStudents", controller = "StudentDTO"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Collections.Generic.IEnumerable`1[LearningDotnet.DTO.StudentDTO]] GetStudents() on controller LearningDotnet.Controllers.StudentDTOController (LearningDotnet).
+2026-01-20 08:56:42.758 +05:30 [INF] Executing OkObjectResult, writing value of type 'System.Linq.Enumerable+ListSelectIterator`2[[LearningDotnet.Models.Student, LearningDotnet, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[LearningDotnet.DTO.StudentDTO, LearningDotnet, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-01-20 08:56:42.766 +05:30 [INF] Executed action LearningDotnet.Controllers.StudentDTOController.GetStudents (LearningDotnet) in 8.6798ms
+2026-01-20 08:56:42.766 +05:30 [INF] Executed endpoint 'LearningDotnet.Controllers.StudentDTOController.GetStudents (LearningDotnet)'
+2026-01-20 08:56:42.766 +05:30 [INF] Request finished HTTP/2 GET https://localhost:7085/api/StudentDTO/All - 200 599 application/json; charset=utf-8 19.8236ms
