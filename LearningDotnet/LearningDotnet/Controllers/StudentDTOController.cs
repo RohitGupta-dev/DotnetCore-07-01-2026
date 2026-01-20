@@ -45,7 +45,15 @@ namespace LearningDotnet.Controllers
             }
             );
             return Ok(studentObj);
+                }
+
+        [HttpGet("datall")]
+        public ActionResult<Student> allStudent()
+        {
+            var student = CollegeRepository.Students.ToList();
+            return Ok(student);
         }
+       
         //[HttpGet("{id:int}")]
         [HttpGet]
         [Route("{id:int}", Name = "GetStudentByIdStudentDTO")]
