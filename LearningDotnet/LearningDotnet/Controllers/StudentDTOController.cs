@@ -1,4 +1,5 @@
-﻿using LearningDotnet.DTO;
+﻿using LearningDotnet.DependencyInjection;
+using LearningDotnet.DTO;
 using LearningDotnet.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -12,6 +13,14 @@ namespace LearningDotnet.Controllers
     [ApiController]
     public class StudentDTOController : ControllerBase
     {
+        private readonly IMyLogger _logger;
+
+        public StudentDTOController(IMyLogger logger)
+        {
+            _logger = logger;
+        }
+        
+
         [HttpGet]
         //Routing
         [Route("All",Name="GetAllStudentsStudentDTO")]
@@ -22,6 +31,7 @@ namespace LearningDotnet.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public ActionResult<IEnumerable<StudentDTO>> GetStudents()
         {
+            _logger.log("student Dto called");
             var students= new List<StudentDTO>();
 
             //foreach (var item in CollegeRepository.Students)
@@ -47,6 +57,7 @@ namespace LearningDotnet.Controllers
             return Ok(studentObj);
                 }
 
+        //add Method for content negotiation
         [HttpGet("datall")]
         public ActionResult<Student> allStudent()
         {
