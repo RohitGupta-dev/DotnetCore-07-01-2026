@@ -1,20 +1,26 @@
+using LearningDotnet.Data;
 using LearningDotnet.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //Add Serilog
-Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Information()
-    .WriteTo.File("log/log.txt", rollingInterval: RollingInterval.Minute)
-    .CreateLogger();
+//Log.Logger = new LoggerConfiguration()
+//    .MinimumLevel.Information()
+//    .WriteTo.File("log/log.txt", rollingInterval: RollingInterval.Minute)
+//    .CreateLogger();
 
-builder.Host.UseSerilog();
+//builder.Host.UseSerilog();
     
     // Add services to the container.
 
 builder.Services.AddControllers().AddNewtonsoftJson();
 
+builder.Services.AddDbContext<CollegeDBContext>(option =>
+{
+    option.UseSqlServer(builder.Configuration.GetConnectionString("default"));
+});
 ////add Method for content negotiation
 //builder.Services.AddControllers(options => options.ReturnHttpNotAcceptable = true).AddNewtonsoftJson().AddXmlDataContractSerializerFormatters();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
