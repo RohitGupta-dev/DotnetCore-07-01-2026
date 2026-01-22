@@ -45,7 +45,7 @@ namespace LearningDotnet.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("students");
+                    b.ToTable("Student", (string)null);
 
                     b.HasData(
                         new

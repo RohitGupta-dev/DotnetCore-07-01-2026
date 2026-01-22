@@ -10,13 +10,13 @@ namespace LearningDotnet.Data
             
         }
 
-        public DbSet<Student> students { get; set; }
+        public DbSet<Student> Students { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //This thing has 2 ways 
             //1.this is 
-            //2. use configclass of dbset and set the property view this in studentConfig.cs
+            //2. use configclass(Entity Type Configuration) of dbset and set the property view this in studentConfig.cs
             //if you have multiple table 
             //table 1
             modelBuilder.ApplyConfiguration(new studentConfig());
