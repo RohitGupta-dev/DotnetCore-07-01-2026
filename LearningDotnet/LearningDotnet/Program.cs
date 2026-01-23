@@ -1,3 +1,4 @@
+using LearningDotnet.Configuration;
 using LearningDotnet.Data;
 using LearningDotnet.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,9 @@ builder.Services.AddDbContext<CollegeDBContext>(option =>
 //builder.Services.AddControllers(options => options.ReturnHttpNotAcceptable = true).AddNewtonsoftJson().AddXmlDataContractSerializerFormatters();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 
+
+// AutoMapper
+builder.Services.AddAutoMapper(typeof(AutoMapperConfig));
 
     
 // add Dependency Injection 

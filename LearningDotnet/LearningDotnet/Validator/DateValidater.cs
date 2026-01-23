@@ -7,7 +7,7 @@ namespace LearningDotnet.Validator
         protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
         {
             var date = (DateTime?)value;
-            if(date < DateTime.Now)
+            if(date > DateTime.Now)
             {
                 return new ValidationResult("The date must not greater then today ");
             }
