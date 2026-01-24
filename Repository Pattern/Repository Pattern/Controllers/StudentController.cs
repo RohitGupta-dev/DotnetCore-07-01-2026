@@ -9,9 +9,10 @@ namespace Repository_Pattern.Controllers
     [ApiController]
     public class StudnetController : ControllerBase
     {
-        private readonly ICollegeRepository<student> _repo;
+        //private readonly ICollegeRepository<student> _repo;
+        private readonly IStudent _repo;
 
-        public StudnetController(ICollegeRepository<student> repo)
+        public StudnetController(IStudent repo)
         {
             _repo = repo;
         }
@@ -23,6 +24,14 @@ namespace Repository_Pattern.Controllers
             var student = await _repo.GetAll();
             return Ok(student);
         }
+        [HttpGet("getByFees/{id:int}", Name = "getByFees")]
+        public async Task<ActionResult<bool>> GetByfees([FromRoute] int id)
+        {
+            var createdStudent = await _repo.GetStudentFees(id);
+            return Ok(createdStudent);
+        }
+
+
 
         // GET: api/student/id/5
         [HttpGet("id/{id:int}", Name = "getStudentById")]

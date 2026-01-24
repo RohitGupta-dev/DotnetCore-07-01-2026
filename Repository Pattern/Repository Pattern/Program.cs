@@ -16,6 +16,8 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("default")));
 
 builder.Services.AddScoped<IEmployee,EmployeeRepositry>();
+builder.Services.AddScoped<IStudent,StudentRepositry>();
+
 builder.Services.AddScoped(typeof(ICollegeRepository<>),typeof(collegeRepository<>));
 //builder.Services.AddScoped(typeof(ICollegeRepository<>),typeof(collegeRepository<>));
 
