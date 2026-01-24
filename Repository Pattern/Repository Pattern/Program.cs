@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Repository_Pattern.Data;
+using Repository_Pattern.Models;
+using Repository_Pattern.Repo;
 using Repository_Pattern.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +15,9 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("default")));
 
-builder.Services.AddScoped<EmployeeRepositry>();
+builder.Services.AddScoped<IEmployee,EmployeeRepositry>();
+builder.Services.AddScoped(typeof(ICollegeRepository<>),typeof(collegeRepository<>));
+//builder.Services.AddScoped(typeof(ICollegeRepository<>),typeof(collegeRepository<>));
 
 var app = builder.Build();
 

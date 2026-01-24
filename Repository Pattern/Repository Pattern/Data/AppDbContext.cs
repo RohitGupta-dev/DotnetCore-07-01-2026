@@ -11,6 +11,7 @@ namespace Repository_Pattern.Data
                 
         }
         public DbSet<Employee> employee { get; set; }
+        public DbSet<student> students { get; set; }
 
        
     }
