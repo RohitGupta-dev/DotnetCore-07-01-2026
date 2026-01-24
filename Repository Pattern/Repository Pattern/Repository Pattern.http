@@ -1,0 +1,6 @@
+@Repository_Pattern_HostAddress = http://localhost:5275
+
+GET {{Repository_Pattern_HostAddress}}/swagger/
+Accept: application/json
+
+###
