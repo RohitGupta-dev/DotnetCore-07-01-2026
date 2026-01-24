@@ -13,7 +13,12 @@ namespace Repository_Pattern.Models
         public string Name { get; set; }
         [EmailAddress]
         public string Email { get; set; }
+        public string Address { get; set; }
         public string Phone { get; set; }
         public bool Status { get; set; }
+
+        public int? DepratmentId { get; set; }
+        public virtual Department Department { get; set; }
+
     }
 }
