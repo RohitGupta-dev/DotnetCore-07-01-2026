@@ -47,8 +47,17 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 //app.UseCors("test");
+app.UseRouting();
 app.UseCors();
 app.UseAuthorization();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapGet("api/testingEnspoints", context => context.Response.WriteAsync("Test Response")).RequireCors();
+    endpoints.MapControllers().RequireCors("AllowAll");
+    endpoints.MapGet("api/testingEnspoint2", context => context.Response.WriteAsync("Test Response 2")).RequireCors();
+
+});
 
 app.MapControllers();
 
