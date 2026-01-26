@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Repository_Pattern.Data;
 using Repository_Pattern.Models;
 using Repository_Pattern.Repo;
@@ -15,7 +16,62 @@ var key = Encoding.ASCII.GetBytes(builder.Configuration.GetValue<string>("JWTSec
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddSwaggerGen();
+//builder.Services.AddSwaggerGen(options =>
+//{
+//    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+//    {
+//        Description = "jwt toket authorise with bearer schema  ",
+//        Name = "Authorization",
+//        In = ParameterLocation.Header,
+//        Scheme = "Bearer"
+
+//    });
+//    options.AddSecurityRequirement(new OpenApiSecurityRequirement());
+//    {
+//        {
+//            new OpenApiSecurityScheme
+//            {
+//                Reference = new OpenApiReference
+//                {
+//                    Id = "Bearer",
+//                    Type = ReferenceType.SecurityScheme
+//                },
+//                Scheme = "oauth2",
+//                Name = "Bearer",
+//                In = ParameterLocation.Header
+//            };
+//            new List<string>();
+//        }
+//    };
+//});
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Enter JWT token like: Bearer {your token}"
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new List<string>()
+        }
+    });
+});
+
 builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("default")));
