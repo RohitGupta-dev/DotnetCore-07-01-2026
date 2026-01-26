@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using Repository_Pattern.Models;
 using Repository_Pattern.Repo;
 using Repository_Pattern.Services;
@@ -7,6 +8,7 @@ namespace Repository_Pattern.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors(PolicyName = "onlyLoclhost")]
     public class StudnetController : ControllerBase
     {
         //private readonly ICollegeRepository<student> _repo;
@@ -19,6 +21,7 @@ namespace Repository_Pattern.Controllers
 
         // GET: api/student/all
         [HttpGet("StudentAll")]
+        //[DisableCors]
         public async Task<ActionResult<List<student>>> GetStudents()
         {
             var student = await _repo.GetAll();

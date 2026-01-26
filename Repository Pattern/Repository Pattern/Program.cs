@@ -21,6 +21,19 @@ builder.Services.AddScoped<IStudent,StudentRepositry>();
 builder.Services.AddScoped(typeof(ICollegeRepository<>),typeof(collegeRepository<>));
 //builder.Services.AddScoped(typeof(ICollegeRepository<>),typeof(collegeRepository<>));
 
+//builder.Services.AddCors(option=>option.AddPolicy("test",
+//    //policy=>policy.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod())
+//    policy=>policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod())
+
+//    );
+
+builder.Services.AddCors(options=>{
+    options.AddDefaultPolicy(policy=>policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+    options.AddPolicy("AllowAll",policy=>policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+    options.AddPolicy("onlyLoclhost",policy=>policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod());
+    options.AddPolicy("test",policy=>policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod());
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -33,6 +46,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+//app.UseCors("test");
+app.UseCors();
 app.UseAuthorization();
 
 app.MapControllers();
