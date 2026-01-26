@@ -1,11 +1,16 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Repository_Pattern.Data;
 using Repository_Pattern.Models;
 using Repository_Pattern.Repo;
 using Repository_Pattern.Services;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var key = Encoding.ASCII.GetBytes(builder.Configuration.GetValue<string>("JWTSecret"));
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -34,6 +39,28 @@ builder.Services.AddCors(options=>{
     options.AddPolicy("test",policy=>policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod());
 });
 
+//jwt
+
+builder.Services.AddAuthentication(option =>
+{
+    option.DefaultAuthenticateScheme= JwtBearerDefaults.AuthenticationScheme;
+    option.DefaultChallengeScheme= JwtBearerDefaults.AuthenticationScheme;
+
+}).AddJwtBearer(option =>
+{
+    //option.RequireHttpsMetadata = false;
+    option.SaveToken = true;
+    option.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = false,
+        ValidateAudience = false,
+
+    };
+    
+    });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -55,7 +82,7 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapGet("api/testingEnspoints", context => context.Response.WriteAsync("Test Response")).RequireCors();
     endpoints.MapControllers().RequireCors("AllowAll");
-    endpoints.MapGet("api/testingEnspoint2", context => context.Response.WriteAsync("Test Response 2")).RequireCors();
+    endpoints.MapGet("api/testingEnspoint2", context => context.Response.WriteAsync(builder.Configuration.GetValue<string>("JWTSecret"))).RequireCors();
 
 });
 

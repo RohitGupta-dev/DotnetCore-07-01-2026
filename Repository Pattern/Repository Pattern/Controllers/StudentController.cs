@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Cors;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Repository_Pattern.Models;
 using Repository_Pattern.Repo;
@@ -8,7 +9,9 @@ namespace Repository_Pattern.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors(PolicyName = "onlyLoclhost")]
+    //[EnableCors(PolicyName = "onlyLoclhost")]
+    [Authorize(Roles = "Superadmin,Admin")]
+
     public class StudnetController : ControllerBase
     {
         //private readonly ICollegeRepository<student> _repo;

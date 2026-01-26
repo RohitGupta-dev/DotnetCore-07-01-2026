@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Repository_Pattern.Models;
 using Repository_Pattern.Services;
 
@@ -17,6 +18,7 @@ namespace Repository_Pattern.Controllers
 
         // GET: api/employee/all
         [HttpGet("all")]
+        //[AllowAnonymous]
         public async Task<ActionResult<List<Employee>>> GetEmployees()
         {
             var employees = await _repo.GetAllEmployee();
